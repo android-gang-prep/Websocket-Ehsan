@@ -1,5 +1,6 @@
 package com.ehsannarmani.socketehsan
 
+import com.ehsannarmani.socketehsan.utils.isDateTime
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
@@ -79,7 +80,7 @@ class MainViewModelTest {
                 data: String
             ) {
                 super.onEvent(eventSource, id, type, data)
-                isTimeReceived = type == "time"
+                isTimeReceived = type == "time" && data.isDateTime()
             }
         })
         Thread.sleep(TIMER_SSE_RECEIVE_TIME_OUT.inWholeMilliseconds)
