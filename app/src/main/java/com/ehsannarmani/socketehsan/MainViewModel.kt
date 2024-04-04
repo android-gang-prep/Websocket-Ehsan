@@ -84,19 +84,20 @@ class MainViewModel: ViewModel() {
                 }
             }
 
-            override fun onOpen(eventSource: EventSource, response: Response) {
-                super.onOpen(eventSource, response)
+            override fun onClosed(eventSource: EventSource) {
+                super.onClosed(eventSource)
+                if (_reconnectEnabled.value) startSSE()
             }
         }
     }
 
-    fun connect(){
+    fun connect(listener: WebSocketListener = this.listener){
         val client = OkHttpClient()
         val request = Request.Builder().url(WEBSOCKET_URL).build()
         webSocket = client.newWebSocket(request,listener)
     }
 
-    fun startSSE(){
+    fun startSSE(listener: EventSourceListener = this.timeSSEListener){
         val sseClient = OkHttpClient()
             .newBuilder()
             .readTimeout(1,TimeUnit.DAYS)
@@ -109,7 +110,7 @@ class MainViewModel: ViewModel() {
             .build()
         EventSources
             .createFactory(sseClient)
-            .newEventSource(request,timeSSEListener)
+            .newEventSource(request,listener)
     }
 
     fun sendMessage(message:String){

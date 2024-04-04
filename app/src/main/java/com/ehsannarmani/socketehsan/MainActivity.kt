@@ -73,13 +73,14 @@ class MainActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(onClick = {
                                 viewModel.sendMessage(message.value)
+                                message.value = ""
                             },modifier=Modifier.fillMaxWidth(), shape = RoundedCornerShape(8.dp)) {
                                 Text(text = "Send")
                             }
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = "Messages:", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
-                            LazyColumn(modifier=Modifier.fillMaxWidth()){
+                            LazyColumn(modifier=Modifier.fillMaxWidth().height(300.dp)){
                                 items(messages.reversed()){
                                     Text(text = it)
                                 }
@@ -87,7 +88,7 @@ class MainActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.height(12.dp))
                             Text(text = "Time Updates:", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
-                            LazyColumn(modifier=Modifier.fillMaxWidth()){
+                            LazyColumn(modifier=Modifier.fillMaxWidth().height(300.dp)){
                                 items(times.reversed()){
                                     Text(text = it)
                                 }
